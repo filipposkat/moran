@@ -1,0 +1,1 @@
+python3 moran_challenge_tournament.py -p0 omada01_moran.PlayerOmada01 -p1 omada51_moran.PlayerOmada51 -p2 omada52_moran.PlayerOmada52 -p3 omada53_moran.PlayerOmada53 -num_of_games 24 -verbose -seed 33
