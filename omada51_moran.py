@@ -1,4 +1,5 @@
 import random
+from collections import Counter
 
 import networkx as nx
 
@@ -37,7 +38,7 @@ class PlayerOmada51(Player):
             for t,c in sorted_counters:
                 if t !=self.my_type:
                     specific_targets=[v for v in list_of_neighbors if node_types[v] == t]
-                    if specifictargets:
+                    if specific_targets:
                         node=max(specific_targets,key=lambda item:self.game_info.g.degree[item])
                         return node
         return node
