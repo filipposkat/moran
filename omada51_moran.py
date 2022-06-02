@@ -30,16 +30,16 @@ class PlayerOmada51(Player):
         targets = [v for v in list_of_neighbors if node_types[v] != self.my_type]
         node = None
         if targets:
-            node = max(targets,key=lambda item: self.game_info.g.degree[item])
+            node = max(targets, key=lambda item: self.game_info.g.degree[item])
             history=self.game_info.history
             took_from_me=[move.player for move in history if move.type_from==self.my_type]
             counter=Counter(took_from_me)
-            sorted_counters=sorted(counter.items(),key=lambda kv: kv[l],reverse=True)
+            sorted_counters=sorted(counter.items(), key=lambda kv: kv[1], reverse=True)
             for t,c in sorted_counters:
                 if t !=self.my_type:
                     specific_targets=[v for v in list_of_neighbors if node_types[v] == t]
                     if specific_targets:
-                        node=max(specific_targets,key=lambda item:self.game_info.g.degree[item])
+                        node=max(specific_targets, key=lambda item:self.game_info.g.degree[item])
                         return node
         return node
 
