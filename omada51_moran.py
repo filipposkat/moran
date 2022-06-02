@@ -32,7 +32,7 @@ class PlayerOmada51(Player):
         if targets:
             node = max(targets, key=lambda item: self.game_info.g.degree[item])
             history=self.game_info.history
-            took_from_me=[move.player for move in history if move.type_from==self.my_type]
+            took_from_me=[move.player_type for move in history if move.type_from==self.my_type]
             counter=Counter(took_from_me)
             sorted_counters=sorted(counter.items(), key=lambda kv: kv[1], reverse=True)
             for t,c in sorted_counters:
