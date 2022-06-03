@@ -26,6 +26,7 @@ class PlayerOmada51(Player):
         list_of_neighbors = list(neighbors)
         node_types = nx.get_node_attributes(self.game_info.g, "types")
         eg_centralities = nx.eigenvector_centrality(self.game_info.g)
+        betweenness_centralities = nx.betweenness_centrality(self.game_info.g)
         # Choose first foreign neighbor
         targets = [v for v in list_of_neighbors if node_types[v] != self.my_type]
         node = None
@@ -62,5 +63,6 @@ class PlayerOmada51(Player):
                     if specific_targets:
                         node = max(specific_targets, key=lambda item:self.game_info.g.degree[item])
                         #node = max(specific_targets, key=lambda item: eg_centralities[item])
+                        #node = max(specific_targets, key=lambda item: betweenness_centralities[item])
                         return node
         return node
