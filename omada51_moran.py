@@ -38,7 +38,7 @@ class PlayerOmada51(Player):
             attacks_dict = {}  # dictionary containing attacks from each player
             for item in counter.items():
                 if item[0] not in attacks_dict:
-                    attacks_dict[item[0]] += item[1]
+                    attacks_dict[item[0]] = item[1]
             sorted_attacks = sorted(attacks_dict.keys(), key=attacks_dict.get, reverse=True) # sorted list of players based on attack count
 
             cntr, num_of_distinct_type_values, distinct_type_keys, distinct_type_counts = self.game_info.get_number_of_active_players() # gets counter for each players' nodes
