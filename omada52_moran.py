@@ -31,8 +31,6 @@ class PlayerOmada52(Player):
         targets = [v for v in list_of_neighbors if node_types[v] != self.my_type]
         node = None
         if targets:
-            #node = targets[0]
-            node = max(targets, key=lambda item: self.game_info.g.degree[item])
             counter = Counter(node_types.values())
             sorted_counter = sorted(counter.items(), key=lambda kv: kv[1], reverse=True) # kv[1] returns count of nodes for each item (node_type)
             for t,c in sorted_counter:
