@@ -39,8 +39,10 @@ class PlayerOmada51(Player):
             for item in counter.items():
                 if item[0] not in attacks_dict:
                     attacks_dict[item[0]] += item[1]
-            cntr, num_of_distinct_type_values, distinct_type_keys, distinct_type_counts = self.game_info.get_number_of_active_players() # gets counte
-            n_of_nodes_by_player = {}
+            sorted_attacks = sorted(attacks_dict.keys(), key=attacks_dict.get, reverse=True) # sorted list of players based on attack count
+
+            cntr, num_of_distinct_type_values, distinct_type_keys, distinct_type_counts = self.game_info.get_number_of_active_players() # gets counter for each players' nodes
+            n_of_nodes_by_player = {} # dict containing number of nodes per player
             for item in cntr.items():
                 if item[0] not in n_of_nodes_by_player:
                     n_of_nodes_by_player[item[0]] = item[1]
@@ -53,7 +55,7 @@ class PlayerOmada51(Player):
                     for p in attacks_dict:
                         if count == attacks_dict[p] and p != self.my_type:
                             same_count.append(p)
-                    same_count.sort(key=lambda plr:n_of_nodes_by_player[plr])
+                    same_count.sort(key=lambda plr:n_of_nodes_by_player[plr]) # sort these players by their size
 
                     specific_targets = [v for v in list_of_neighbors if node_types[v] == t]
                     if specific_targets:
