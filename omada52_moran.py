@@ -33,7 +33,7 @@ class PlayerOmada52(Player):
         if targets:
             counter = Counter(node_types.values())
             sorted_counter = sorted(counter.items(), key=lambda kv: kv[1], reverse=True) # kv[1] returns count of nodes for each item (node_type)
-            for t,c in sorted_counter:
+            for t, c in sorted_counter:
                 if t != self.my_type:
                     specific_targets = [v for v in list_of_neighbors if node_types[v] == t]
                     if specific_targets:
