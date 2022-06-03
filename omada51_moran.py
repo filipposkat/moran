@@ -56,7 +56,7 @@ class PlayerOmada51(Player):
                     for p in attacks_dict:
                         if count == attacks_dict[p] and p != self.my_type:
                             same_count.append(p)
-                    same_count.sort(key=lambda plr:n_of_nodes_by_player[plr]) # sort these players by their size
+                    #same_count.sort(key=lambda plr:n_of_nodes_by_player[plr]) # sort these players by their size
 
                     specific_targets = [v for v in list_of_neighbors if node_types[v] == t]
                     if specific_targets:
