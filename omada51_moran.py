@@ -25,8 +25,8 @@ class PlayerOmada51(Player):
         neighbors = self.game_info.g.neighbors(from_node)
         list_of_neighbors = list(neighbors)
         node_types = nx.get_node_attributes(self.game_info.g, "types")
-        eg_centralities = nx.eigenvector_centrality(self.game_info.g)
-        betweenness_centralities = nx.betweenness_centrality(self.game_info.g)
+        #eg_centralities = nx.eigenvector_centrality(self.game_info.g)
+        #betweenness_centralities = nx.betweenness_centrality(self.game_info.g)
         # Choose first foreign neighbor
         targets = [v for v in list_of_neighbors if node_types[v] != self.my_type]
         node = None
@@ -57,7 +57,7 @@ class PlayerOmada51(Player):
                     for p in attacks_dict:
                         if count == attacks_dict[p] and p != self.my_type:
                             same_count.append(p)
-                    #same_count = sorted(key=lambda plr:n_of_nodes_by_player[plr]) # sort these players by their size
+                    #same_count = sorted(same_count, key=lambda plr:n_of_nodes_by_player[plr]) # sort these players by their size
 
                     specific_targets = [v for v in list_of_neighbors if node_types[v] == t]
                     if specific_targets:
