@@ -58,8 +58,8 @@ class PlayerOmada51(Player):
                         if count == attacks_dict[p] and p != self.my_type and p in n_of_nodes_by_player:
                             same_count.append(p)
                     if same_count:
-                        same_count = sorted(same_count, key=lambda plr: n_of_nodes_by_player[plr])  # sort these players by their size
-                        t = same_count[0]  # gets smallest player with highest attack count
+                        same_count = sorted(same_count, key=lambda plr: n_of_nodes_by_player[plr], reverse=True)  # sort these players by their size
+                        #t = same_count[0]  # gets largest player with highest attack count
 
                     specific_targets = [v for v in list_of_neighbors if node_types[v] == t]
                     if specific_targets:
