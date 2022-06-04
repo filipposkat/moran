@@ -50,8 +50,8 @@ class PlayerOmada01(Player):
                 if item[0] not in n_of_nodes_by_player:
                     n_of_nodes_by_player[item[0]] = item[1]
             sorted_player_size = sorted(n_of_nodes_by_player.keys(), key=lambda k: n_of_nodes_by_player[k])
-            if len(sorted_player_size) > 2:
-                sorted_player_size.pop(0)  # remove smallest player
+            # if len(sorted_player_size) > 2:
+            #     sorted_player_size.pop(0)  # remove smallest player
 
             for t in sorted_attacks:
                 if t != self.my_type and t in sorted_player_size:
