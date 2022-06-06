@@ -67,7 +67,7 @@ class PlayerOmada01(Player):
 
                     specific_targets = [v for v in list_of_neighbors if node_types[v] == t]
                     if specific_targets:
-                        node = max(specific_targets, key=lambda item:self.game_info.g.degree[item])
+                        node = min(specific_targets, key=lambda item:self.game_info.g.degree[item])
                         #node = max(specific_targets, key=lambda item: eg_centralities[item])
                         #node = max(specific_targets, key=lambda item: betweenness_centralities[item])
                         return node
