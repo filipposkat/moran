@@ -6,6 +6,7 @@ from moran_challenge_support import Player
 
 from omada01.omada01_sample import sample_function
 
+
 class PlayerOmada01(Player):
     def initialize(self, game_info, player_id, my_type, player_seed) -> None:
         # This function is called once before the game starts.
@@ -26,8 +27,7 @@ class PlayerOmada01(Player):
         neighbors = self.game_info.g.neighbors(from_node)
         list_of_neighbors = list(neighbors)
         node_types = nx.get_node_attributes(self.game_info.g, "types")
-        #eg_centralities = nx.eigenvector_centrality(self.game_info.g)
-        #betweenness_centralities = nx.betweenness_centrality(self.game_info.g)
+        a, b, players, d = self.game_info.get_number_of_active_players()
         # Choose first foreign neighbor
         targets = [v for v in list_of_neighbors if node_types[v] != self.my_type]
         node = None
@@ -36,15 +36,17 @@ class PlayerOmada01(Player):
             history = self.game_info.history
             took_from_me = [move.player_type for move in history if move.type_from == self.my_type]
             counter = Counter(took_from_me)
-            sorted_counters = sorted(counter.items(), key=lambda kv: kv[1], reverse=True)  # sorted list of players based on attacks on us
+            sorted_counters = sorted(counter.items(), key=lambda kv: kv[1],
+                                     reverse=True)  # sorted list of players based on attacks on us
             attacks_dict = {}  # dictionary containing attacks from each player
             for item in counter.items():
                 if item[0] not in attacks_dict:
                     attacks_dict[item[0]] = item[1]
-            sorted_attacks = sorted(attacks_dict.keys(), key=attacks_dict.get, reverse=True) # sorted list of players based on attack count
+            sorted_attacks = sorted(attacks_dict.keys(), key=attacks_dict.get,
+                                    reverse=True)  # sorted list of players based on attack count
 
             cntr = Counter(node_types.values())
-            n_of_nodes_by_player = {} # dict containing number of nodes per player
+            n_of_nodes_by_player = {}  # dict containing number of nodes per player
             for item in cntr.items():
                 # item[0] = player, item[1]=n_of_nodes
                 if item[0] not in n_of_nodes_by_player:
@@ -62,13 +64,28 @@ class PlayerOmada01(Player):
                         if count == attacks_dict[p] and p != self.my_type and p in n_of_nodes_by_player:
                             same_count.append(p)
                     if same_count:
-                        same_count = sorted(same_count, key=lambda plr: n_of_nodes_by_player[plr], reverse=True)  # sort these players by their size
-                        t = same_count[0]  # gets largest player with highest attack count
+                        same_count = sorted(same_count, key=lambda plr: n_of_nodes_by_player[plr],
+                                            reverse=True)  # sort these players by their size
+                        t = same_count[0]  # gets the largest player with the highest attack count
 
                     specific_targets = [v for v in list_of_neighbors if node_types[v] == t]
                     if specific_targets:
-                        node = min(specific_targets, key=lambda item:self.game_info.g.degree[item])
-                        #node = max(specific_targets, key=lambda item: eg_centralities[item])
-                        #node = max(specific_targets, key=lambda item: betweenness_centralities[item])
+                        nodes = sorted(specific_targets, key=lambda item: self.game_info.g.degree[item])
+                        min_degree_node = nodes[0]
+                        median_degree_node = nodes[int(len(nodes) / 2)]
+                        max_degree_node = nodes[len(nodes) - 1]
+
+                        node = min_degree_node
+
+                        adaptive = False
+                        if adaptive:
+                            # compare out node count with total nodes:
+                            if n_of_nodes_by_player[self.my_type] >= len(self.game_info.g.nodes) / len(players):
+                                # we are relatively large, so we have high probability of subsequent selection,
+                                node = min_degree_node
+                            else:
+                                # we are relatively small, so we have low probability of subsequent selection,
+                                # node = max_degree_node
+                                node = median_degree_node
                         return node
         return node
