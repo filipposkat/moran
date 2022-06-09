@@ -3,6 +3,9 @@ random, collections, networkx, numpy
 Αν κάποια δεν είναι εγκατεστημένη πρέπει να εγκατασταθεί με
     pip install <όνομα βιβλιοθήκης>
 
+Παράδειγμα εκτέλεσης κώδικα (βασική στρατηγική):
+python3 moran_challenge_tournament.py -p0 omada01_moran.PlayerOmada01 -p1 omada51_moran.PlayerOmada51 -p2 omada52_moran.PlayerOmada52 -p3 omada53_moran.PlayerOmada53 -num_of_games 24 -verbose -seed 33
+
 Χρησιμοποιούμε έναν εκδικητικό αλγόριθμο:
 1. Βρίσκει όλους τους γειτονικούς κόμβους και σημείωνε σε ποιόν παίκτη/αντίπαλο ανήκει ο καθένας.
 2. Ταξινομεί τους αντιπάλους με βάση των αριθμό επιθέσεων που έχουν κάνει στην ομάδα μας (attack count)
