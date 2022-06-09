@@ -88,16 +88,16 @@ class PlayerOmada01(Player):
 
                         node = min_degree_node
 
-                        adaptive = True
+                        adaptive = False
                         if adaptive:
                             # compare out node count with total nodes:
-                            if not n_of_nodes_by_player[self.my_type] >= len(self.game_info.g.nodes) / len(players):
+                            if n_of_nodes_by_player[self.my_type] >= len(self.game_info.g.nodes) / len(players):
                                 # we are relatively large, so we have high probability of subsequent selection,
                                 node = min_degree_node
                             else:
                                 # we are relatively small, so we have low probability of subsequent selection,
-                                node = max_degree_node
-                                # node = median_degree_node
+                                # node = max_degree_node
+                                node = median_degree_node
 
                         if self.USE_NN:
                             agent = self.AGENT
