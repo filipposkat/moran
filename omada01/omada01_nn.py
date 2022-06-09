@@ -19,7 +19,7 @@ class Agent:
             # Hyperparameters to adjust the Exploitation-Explore tradeoff
             self.epsilon = 0.2  # Setting the epsilon (0= Explore, 1= Exploit)
             self.epsilon_decay = 0.999999  # Adjusting how our epsilon will decay
-            self.epsilon_min = 0.2  # Min Epsilon
+            self.epsilon_min = 0.1  # Min Epsilon
 
             self.batch_size = 5000  # Batch Size for training the neural network
             self.train_start = 50000  # If Agent's memory is less, no training is done
@@ -33,12 +33,12 @@ class Agent:
             self.learning_rate = 0.01  # Learning Rate
 
             # Hyperparameters to adjust the Exploitation-Explore tradeoff
-            self.epsilon = 1.0  # Setting the epsilon (0= Explore, 1= Exploit)
-            self.epsilon_decay = 0.999  # Adjusting how our epsilon will decay
+            self.epsilon = 1  # Setting the epsilon (0= Explore, 1= Exploit)
+            self.epsilon_decay = 0.99992  # Adjusting how our epsilon will decay
             self.epsilon_min = 0.1  # Min Epsilon
 
-            self.batch_size = 5000  # Batch Size for training the neural network
-            self.train_start = 50000  # If Agent's memory is less, no training is done
+            self.batch_size = 1000  # Batch Size for training the neural network
+            self.train_start = 10000  # If Agent's memory is less, no training is done
 
         # create main replay memory for the agent using deque
         self.memory = deque(maxlen=12000000)
@@ -95,7 +95,7 @@ class Agent:
             reward.append(mini_batch[i][2])
 
         target = self.model.predict(update_input)
-        print(action)
+
         for i in range(self.batch_size):
             # Q Learning: get maximum Q value at s' from model
             target[i][action[i]] = reward[i]

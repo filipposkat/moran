@@ -3,7 +3,7 @@ from collections import Counter
 import networkx as nx
 import numpy as np
 
-# import omada01.omada01_nn
+import omada01.omada01_nn
 from moran_challenge_support import Player
 
 
@@ -103,9 +103,22 @@ class PlayerOmada01(Player):
                         if self.USE_NN:
                             agent = self.AGENT
                             data = self.DATA
-                            state = np.array([round(n_of_nodes_by_player[self.my_type]/len(self.game_info.g.nodes), 2)])
+                            ratio = round(n_of_nodes_by_player[self.my_type]/len(self.game_info.g.nodes), 1)
+                            state = np.array([ratio])
+                            # quartile = None
+                            # if ratio < 0.5:
+                            #     if ratio < 0.25:  # 0-25%
+                            #         quartile = 0
+                            #     else:  # 25%-50%
+                            #         quartile = 1
+                            # else:
+                            #     if ratio < 0.75:  #50%-75%
+                            #         quartile = 2
+                            #     else:  # 75%-100%
+                            #         quartile = 3
+                            # state = np.array([quartile])
                             action = agent.get_action(state)
-                            node_by_action = {0: min_degree_node, 1: median_degree_node, 2: max_degree_node}
+                            node_by_action = {2: min_degree_node, 1: median_degree_node, 0: max_degree_node}
                             node = node_by_action[action]
                             data.states.append(state)
                             data.actions.append(action)

@@ -42,11 +42,11 @@ if __name__ == '__main__':
             state = data.states[i]
             action = data.actions[i]
             agent.append_sample(state, action, reward)
-
+        print(data.actions)
         agent.train_model()
         data.states = []
         data.actions = []
-        if ((e + 1) % 10 == 0) & (load_model is False):
+        if ((e + 1) % 5 == 0) & (load_model is False):
             agent.model.save_weights("model_weights.h5")
             pylab.plot(episodes, scores, 'b')
             pylab.savefig("train_progress.png")
