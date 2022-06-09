@@ -1,13 +1,17 @@
 import random
 from collections import Counter
 import networkx as nx
+import numpy as np
 
+# import omada01.omada01_nn
 from moran_challenge_support import Player
-
-from omada01.omada01_sample import sample_function
 
 
 class PlayerOmada01(Player):
+    DATA = None
+    AGENT = None
+    USE_NN = False
+
     def initialize(self, game_info, player_id, my_type, player_seed) -> None:
         # This function is called once before the game starts.
         # Can be used for initializing auxiliary data of the player
@@ -18,8 +22,13 @@ class PlayerOmada01(Player):
         self.my_type = my_type
         self.player_seed = player_seed
         self.rng = random.Random(self.player_seed)
-
-        sample_function()
+        if self.USE_NN:
+            if self.AGENT is None:
+                try:
+                    self.AGENT = omada01.omada01_nn.Agent(1, 3, True)
+                    self.DATA = omada01.omada01_nn.TrainData()
+                except ReferenceError:
+                    print('Uncomment line 6')
 
     def move(self, from_node) -> int:
         # This function is called everytime player b has been selected for a move
@@ -52,8 +61,10 @@ class PlayerOmada01(Player):
                 if item[0] not in n_of_nodes_by_player:
                     n_of_nodes_by_player[item[0]] = item[1]
             sorted_player_size = sorted(n_of_nodes_by_player.keys(), key=lambda k: n_of_nodes_by_player[k])
-            # if len(sorted_player_size) > 2:
-            #     sorted_player_size.pop(0)  # remove smallest player
+
+            exclude_smallest_player = False
+            if len(sorted_player_size) > 2 and exclude_smallest_player:
+                sorted_player_size.pop(0)  # remove smallest player
 
             for t in sorted_attacks:
                 if t != self.my_type and t in sorted_player_size:
@@ -77,15 +88,26 @@ class PlayerOmada01(Player):
 
                         node = min_degree_node
 
-                        adaptive = False
+                        adaptive = True
                         if adaptive:
                             # compare out node count with total nodes:
-                            if n_of_nodes_by_player[self.my_type] >= len(self.game_info.g.nodes) / len(players):
+                            if not n_of_nodes_by_player[self.my_type] >= len(self.game_info.g.nodes) / len(players):
                                 # we are relatively large, so we have high probability of subsequent selection,
                                 node = min_degree_node
                             else:
                                 # we are relatively small, so we have low probability of subsequent selection,
-                                # node = max_degree_node
-                                node = median_degree_node
+                                node = max_degree_node
+                                # node = median_degree_node
+
+                        if self.USE_NN:
+                            agent = self.AGENT
+                            data = self.DATA
+                            state = np.array([round(n_of_nodes_by_player[self.my_type]/len(self.game_info.g.nodes), 2)])
+                            action = agent.get_action(state)
+                            node_by_action = {0: min_degree_node, 1: median_degree_node, 2: max_degree_node}
+                            node = node_by_action[action]
+                            data.states.append(state)
+                            data.actions.append(action)
+
                         return node
         return node
