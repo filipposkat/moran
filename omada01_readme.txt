@@ -1,5 +1,5 @@
 Απαραίτητες βιβλιοθήκες:
-random, collections, networkx, numpy
+random, collections, networkx, numpy, seaborn, matplotlib
 Αν κάποια δεν είναι εγκατεστημένη πρέπει να εγκατασταθεί με
     pip install <όνομα βιβλιοθήκης>
 
