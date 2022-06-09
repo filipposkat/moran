@@ -27,8 +27,9 @@ class PlayerOmada01(Player):
                 try:
                     self.AGENT = omada01.omada01_nn.Agent(1, 3, True)
                     self.DATA = omada01.omada01_nn.TrainData()
-                except ReferenceError:
-                    print('Uncomment line 6')
+                except NameError:
+                    print('Uncomment line 6 or disable USE_NN')
+                    exit()
 
     def move(self, from_node) -> int:
         # This function is called everytime player b has been selected for a move
