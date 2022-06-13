@@ -17,9 +17,9 @@ class Agent:
             self.learning_rate = 0.00001  # Learning Rate
 
             # Hyperparameters to adjust the Exploitation-Explore tradeoff
-            self.epsilon = 0.2  # Setting the epsilon (0= Explore, 1= Exploit)
+            self.epsilon = 0.01 # Setting the epsilon (0= Explore, 1= Exploit)
             self.epsilon_decay = 0.999999  # Adjusting how our epsilon will decay
-            self.epsilon_min = 0.1  # Min Epsilon
+            self.epsilon_min = 0.01  # Min Epsilon
 
             self.batch_size = 5000  # Batch Size for training the neural network
             self.train_start = 50000  # If Agent's memory is less, no training is done
@@ -34,7 +34,7 @@ class Agent:
 
             # Hyperparameters to adjust the Exploitation-Explore tradeoff
             self.epsilon = 1  # Setting the epsilon (0= Explore, 1= Exploit)
-            self.epsilon_decay = 0.99992  # Adjusting how our epsilon will decay
+            self.epsilon_decay = 0.999999  # Adjusting how our epsilon will decay 0.99992
             self.epsilon_min = 0.1  # Min Epsilon
 
             self.batch_size = 1000  # Batch Size for training the neural network
@@ -49,7 +49,7 @@ class Agent:
         # Loading weights if load_model=True
         if load_model:
             try:
-                self.model.load_weights("omada01/model_weights-2.h5")
+                self.model.load_weights("omada01/model_weights-4in-123nn.h5")
             except FileNotFoundError:
                 self.model.load_weights('model_weights-2.h5')
 
@@ -57,8 +57,8 @@ class Agent:
     def build_model(self):
         model = Sequential()
         model.add(Dense(1, input_dim=self.state_size, activation='relu'))  # State is input
-        model.add(Dense(2, activation='relu'))
-        #model.add(Dense(2, activation='relu'))
+        #model.add(Dense(2, activation='relu'))  # hidden layer
+        #model.add(Dense(2, activation='relu'))  # hidden layer
         model.add(Dense(self.action_size, activation='linear'))  # Q_Value of each action is Output
         model.summary()
         model.compile(loss='mse', optimizer=Adam(learning_rate=self.learning_rate))

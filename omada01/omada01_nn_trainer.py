@@ -23,7 +23,7 @@ if __name__ == '__main__':
     scores, episodes = [], []
     player_classes = [PlayerOmada01, PlayerOmada51, PlayerOmada52, PlayerOmada53]
 
-    EPISODES = 1000
+    EPISODES = 2000
     for e in range(EPISODES):
         episodes.append(e)
         games = 1
@@ -42,12 +42,16 @@ if __name__ == '__main__':
             state = data.states[i]
             action = data.actions[i]
             agent.append_sample(state, action, reward)
+
+        print([st[0] for st in data.states])
         print(data.actions)
+
         agent.train_model()
         data.states = []
         data.actions = []
-        if ((e + 1) % 5 == 0) & (load_model is False):
+        if ((e + 1) % 10 == 0) & (load_model is False):
             agent.model.save_weights("model_weights.h5")
             pylab.plot(episodes, scores, 'b')
             pylab.savefig("train_progress.png")
-
+        pylab.plot(episodes[1000:EPISODES], scores[1000:EPISODES], 'b')
+        pylab.savefig("train_progress1000-2000.png")
