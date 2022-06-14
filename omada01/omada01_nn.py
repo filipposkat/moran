@@ -17,7 +17,7 @@ class Agent:
             self.learning_rate = 0.00001  # Learning Rate
 
             # Hyperparameters to adjust the Exploitation-Explore tradeoff
-            self.epsilon = 0.01 # Setting the epsilon (0= Explore, 1= Exploit)
+            self.epsilon = 0.01  # Setting the epsilon (0= Explore, 1= Exploit)
             self.epsilon_decay = 0.999999  # Adjusting how our epsilon will decay
             self.epsilon_min = 0.01  # Min Epsilon
 
@@ -57,10 +57,10 @@ class Agent:
     def build_model(self):
         model = Sequential()
         model.add(Dense(1, input_dim=self.state_size, activation='relu'))  # State is input
-        #model.add(Dense(2, activation='relu'))  # hidden layer
-        #model.add(Dense(2, activation='relu'))  # hidden layer
+        # model.add(Dense(2, activation='relu'))  # hidden layer
+        # model.add(Dense(2, activation='relu'))  # hidden layer
         model.add(Dense(self.action_size, activation='linear'))  # Q_Value of each action is Output
-        model.summary()
+        # model.summary()
         model.compile(loss='mse', optimizer=Adam(learning_rate=self.learning_rate))
         return model
 
@@ -108,7 +108,6 @@ class Agent:
 class TrainData:
     states = []
     actions = []
-
 
 # if __name__ == '__main__':
 #     # get size of state and action from environment
