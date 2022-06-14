@@ -1,3 +1,4 @@
+import numpy as np
 from matplotlib import pylab
 
 from omada01.omada01_nn import Agent, TrainData
@@ -51,7 +52,12 @@ if __name__ == '__main__':
         data.actions = []
         if ((e + 1) % 10 == 0) & (load_model is False):
             agent.model.save_weights("model_weights.h5")
-            pylab.plot(episodes, scores, 'b')
+            episodes_per100 = [episodes[i] for i in range(len(episodes)) if (i+1) % 100 == 0]
+            scores_per100 = [scores[i] for i in range(len(scores)) if (i+1) % 100 == 0]
+            pylab.plot(episodes_per100, scores_per100, 'b')
             pylab.savefig("train_progress.png")
-        pylab.plot(episodes[1000:EPISODES], scores[1000:EPISODES], 'b')
-        pylab.savefig("train_progress1000-2000.png")
+
+        agent.model.save_weights("model_weights.h5")
+        scores_ma100 = [np.mean(scores[i-100:i]) for i in range(100, len(scores), 100)]
+        pylab.plot(list(range(100, len(scores), 100)), scores_ma100, 'b')
+        pylab.savefig("train_progress_100moving_average.png")

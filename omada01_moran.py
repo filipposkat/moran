@@ -10,7 +10,7 @@ from moran_challenge_support import Player
 class PlayerOmada01(Player):
     DATA = None
     AGENT = None
-    USE_NN = False
+    USE_NN = True
 
     def initialize(self, game_info, player_id, my_type, player_seed) -> None:
         # This function is called once before the game starts.

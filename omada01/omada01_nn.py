@@ -49,9 +49,9 @@ class Agent:
         # Loading weights if load_model=True
         if load_model:
             try:
-                self.model.load_weights("omada01/model_weights-4in-123nn.h5")
+                self.model.load_weights("omada01/model_weights-4in-13nn.h5")
             except FileNotFoundError:
-                self.model.load_weights('model_weights-2.h5')
+                self.model.load_weights('model_weights-4in-13nn.h5')
 
     # approximate Q function using Neural Network
     def build_model(self):
