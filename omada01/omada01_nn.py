@@ -19,7 +19,7 @@ class Agent:
             self.learning_rate = 0.00001  # Learning Rate
 
             # Hyperparameters to adjust the Exploitation-Explore tradeoff
-            self.epsilon = 0.01  # Setting the epsilon (0= Explore, 1= Exploit)
+            self.epsilon = 0 # Setting the epsilon (0= Explore, 1= Exploit)
             self.epsilon_decay = 0.999999  # Adjusting how our epsilon will decay
             self.epsilon_min = 0.01  # Min Epsilon
 
@@ -68,7 +68,7 @@ class Agent:
 
     # get action from model using epsilon-greedy policy
     def get_action(self, state):
-        if self.rng.rand() <= self.epsilon:
+        if self.rng.random() <= self.epsilon:
             action = self.rand.randrange(self.action_size)
         else:
             q_value = self.model.predict(state, verbose=0)
