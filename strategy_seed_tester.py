@@ -12,7 +12,7 @@ if __name__ == '__main__':
     # get size of state and action from environment
     player_classes = [PlayerOmada01, PlayerOmada51, PlayerOmada52, PlayerOmada53]
 
-    MAX_SEED = 500
+    MAX_SEED = 100
     GAMES = 24
 
     scores = []

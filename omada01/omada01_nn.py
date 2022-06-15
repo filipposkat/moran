@@ -8,6 +8,8 @@ from keras.models import Sequential
 
 class Agent:
     def __init__(self, state_size, action_size, load_model=False):
+        self.rng = np.random.default_rng(33)
+        self.rand = random.Random(33)
         if load_model:
             self.state_size = state_size  # Get size of the state
             self.action_size = action_size  # Get size of the action
@@ -66,8 +68,8 @@ class Agent:
 
     # get action from model using epsilon-greedy policy
     def get_action(self, state):
-        if np.random.rand() <= self.epsilon:
-            action = random.randrange(self.action_size)
+        if self.rng.rand() <= self.epsilon:
+            action = self.rand.randrange(self.action_size)
         else:
             q_value = self.model.predict(state, verbose=0)
             action = np.argmax(q_value[0])
