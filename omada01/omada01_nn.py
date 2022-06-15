@@ -8,9 +8,11 @@ from keras.models import Sequential
 
 class Agent:
     def __init__(self, state_size, action_size, load_model=False):
-        self.rng = np.random.default_rng(33)
-        self.rand = random.Random(33)
+
         if load_model:
+            self.rng = np.random.default_rng(33)
+            self.rand = random.Random(33)
+
             self.state_size = state_size  # Get size of the state
             self.action_size = action_size  # Get size of the action
             self.last_action = None
@@ -27,6 +29,9 @@ class Agent:
             self.train_start = 50000  # If Agent's memory is less, no training is done
 
         else:
+            self.rng = np.random.default_rng()
+            self.rand = random.Random()
+
             self.state_size = state_size  # Get size of the state
             self.action_size = action_size  # Get size of the action
             self.last_action = None
